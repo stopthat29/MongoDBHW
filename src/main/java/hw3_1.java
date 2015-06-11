@@ -1,5 +1,7 @@
 import com.mongodb.*;
 
+import java.util.Map;
+
 import static com.mongodb.client.model.Filters.*;
 
 /**
@@ -14,9 +16,7 @@ public class hw3_1 {
         MongoClient client = new MongoClient();
         DB db = client.getDB("school");
         DBCollection collection = db.getCollection("students");
-        BasicDBObject filterDBO = new BasicDBObject("scores.type", 0).append("$eq", "homework");
-        BasicDBObject fields = new BasicDBObject().append("scores.homework", true).append("_id", false)
-                .append("scores.exam", false).append("scores.quiz", false);
+
 
 
         DBCursor cursor = collection.find();
@@ -24,6 +24,10 @@ public class hw3_1 {
 
         while (cursor.hasNext()){
             DBObject cur = cursor.next();
+           System.out.println(cur.get("scores").toString());
+           BasicDBList hwVal =(BasicDBList) cur.get("scores");
+
+          //  System.out.print("Double Value: "+hwVal);
             System.out.println(cur.toString());
         }
 
